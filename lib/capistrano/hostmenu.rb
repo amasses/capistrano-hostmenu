@@ -89,8 +89,9 @@ module Capistrano
           set :filter, hosts: hosts
         else
           # hack for Capistrano v3.3+
-          Capistrano::Configuration.env.send(:servers).send(:servers).select! do |srv|
-            hosts.include?(srv.hostname)
+          servers = Capistrano::Configuration.env.servers.instance_variable_get('@servers_by_key')
+           servers.each do |key, srv|
+            servers.delete(key) unless hosts.include?(srv.hostname)
           end
         end
       end
