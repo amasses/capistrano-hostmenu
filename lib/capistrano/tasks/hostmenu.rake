@@ -36,5 +36,5 @@ end
 Capistrano::Hostmenu.set_default_config
 
 Capistrano::DSL.stages.each do |stage|
-  after stage, 'deploy:host_menu'
+  after stage, 'deploy:host_menu' if $stdout.isatty
 end
